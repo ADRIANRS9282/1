@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutiendaderopa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-gray-800">
+
+  <!-- Header con menú -->
+  <header class="flex justify-between items-center p-6 shadow-md bg-gray-50">
+    <div class="flex items-center space-x-8">
+      <h1 class="text-2xl font-bold text-pink-600">Tutiendaderopa</h1>
+      <div class="flex space-x-6 text-sm">
+        <div class="relative">
+          <button onclick="toggleMenu('menuHombre')" class="flex items-center gap-1 text-gray-700 hover:text-pink-600">HOMBRE <span class="text-xs">?</span></button>
+          <div id="menuHombre" class="absolute left-0 mt-2 bg-white border rounded shadow-lg w-40 text-left text-gray-700 hidden z-10">
+            <ul>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Camisas</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Camisetas</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Pantalones</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Zapatos</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Chaquetas</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Bolsos</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Accesorios</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="relative">
+          <button onclick="toggleMenu('menuMujer')" class="flex items-center gap-1 text-gray-700 hover:text-pink-600">MUJER <span class="text-xs">?</span></button>
+          <div id="menuMujer" class="absolute left-0 mt-2 bg-white border rounded shadow-lg w-40 text-left text-gray-700 hidden z-10">
+            <ul>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Blusas</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Faldas</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Camisetas</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Vestidos</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Chaquetas</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Conjuntos</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Bolsos</a></li>
+              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100">Accesorios</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="space-x-4 flex items-center">
+      <a href="#" class="text-gray-700 hover:text-pink-600">Inicio</a>
+      <a href="#contacto" class="text-gray-700 hover:text-pink-600">Contacto</a>
+      <button onclick="toggleCarrito()" class="ml-4 text-gray-700 hover:text-pink-600">
+        ?? <span id="carrito-contador" class="font-bold text-pink-600">0</span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="p-6">
+    <section id="ropa" class="py-16 px-6 bg-white">
+      <h3 class="text-3xl font-semibold text-center text-gray-800 mb-10">Ropa</h3>
+      <div id="ropa-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto"></div>
+    </section>
+
+    <section id="calzado" class="py-16 px-6 bg-gray-50">
+      <h3 class="text-3xl font-semibold text-center text-gray-800 mb-10">Calzado</h3>
+      <div id="calzado-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto"></div>
+    </section>
+  </main>
+
+  <footer id="contacto" class="bg-gray-100 text-center text-gray-600 py-6">
+    <p>&copy; 2025 Tutiendaderopa. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- Panel del carrito -->
+  <div id="carrito-panel" class="fixed top-0 right-0 w-80 h-full bg-white shadow-lg p-4 transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold text-pink-600">Tu carrito</h2>
+      <button onclick="toggleCarrito()" class="text-gray-500 hover:text-pink-600 text-xl">&times;</button>
+    </div>
+    <div id="carrito-items" class="space-y-4"></div>
+    <div id="carrito-total" class="text-right font-bold mt-4 text-gray-800"></div>
+  </div>
+
+  <script>
+    const ropa = [
+      { nombre: "Camisa moderna", precio: "$19.99", imagen: "https://via.placeholder.com/300x200?text=Camisa", descripcion: "Diseño cómodo y elegante.", tipo: "ropa" },
+      { nombre: "Chaqueta casual", precio: "$39.99", imagen: "https://via.placeholder.com/300x200?text=Chaqueta", descripcion: "Ideal para días frescos.", tipo: "ropa" },
+      { nombre: "Jeans ajustados", precio: "$29.99", imagen: "https://via.placeholder.com/300x200?text=Jeans", descripcion: "Estilo urbano y moderno.", tipo: "ropa" }
+    ];
+
+    const calzado = [
+      { nombre: "Zapatillas deportivas", precio: "$49.99", imagen: "https://via.placeholder.com/300x200?text=Zapatillas", descripcion: "Perfectas para el día a día.", tipo: "calzado" },
+      { nombre: "Botines elegantes", precio: "$59.99", imagen: "https://via.placeholder.com/300x200?text=Botines", descripcion: "Para un look sofisticado.", tipo: "calzado" },
+      { nombre: "Sandalias cómodas", precio: "$22.99", imagen: "https://via.placeholder.com/300x200?text=Sandalias", descripcion: "Ideales para el verano.", tipo: "calzado" }
+    ];
+
+    const tallasRopa = ["S", "M", "L", "XL", "XXL"];
+    const tallasZapatos = Array.from({ length: 14 }, (_, i) => (i + 35).toString());
+    let carrito = [];
+
+    function renderProductoCard(producto) {
+      const tallas = producto.tipo === "calzado" ? tallasZapatos : tallasRopa;
+      const opciones = tallas.map(t => `<option value="${t}">${t}</option>`).join("");
+
+      return `
+        <div class="rounded-2xl shadow hover:shadow-lg transition p-4 bg-white">
+          <img src="${producto.imagen}" alt="${producto.nombre}" class="rounded-xl mb-4 w-full h-48 object-cover" />
+          <h4 class="text-lg font-semibold text-gray-800">${producto.nombre}</h4>
+          <p class="text-gray-600 text-sm">${producto.descripcion}</p>
+          <p class="text-pink-600 font-bold mt-2">${producto.precio}</p>
+          <select class="talla-select mt-2 w-full border rounded p-1 text-sm" data-nombre="${producto.nombre}">
+            <option disabled selected>Selecciona talla</option>
+            ${opciones}
+          </select>
+          <button onclick='agregarAlCarrito(${JSON.stringify(producto)})' class="mt-4 bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700 w-full">Añadir al carrito</button>
+        </div>
+      `;
+    }
+
+    function agregarAlCarrito(producto) {
+      const selects = document.querySelectorAll(".talla-select");
+      let talla = null;
+      selects.forEach(select => {
+        if (select.dataset.nombre === producto.nombre) {
+          talla = select.value;
+        }
+      });
+      if (!talla || talla === "Selecciona talla") {
+        alert("Por favor selecciona una talla.");
+        return;
+      }
+      carrito.push({ ...producto, talla });
+      actualizarCarrito();
+    }
+
+    function actualizarCarrito() {
+      document.getElementById("carrito-contador").textContent = carrito.length;
+      renderizarCarrito();
+    }
+
+    function renderizarCarrito() {
+      const contenedor = document.getElementById("carrito-items");
+      contenedor.innerHTML = "";
+      let total = 0;
+
+      if (carrito.length === 0) {
+        contenedor.innerHTML = "<p class='text-gray-500 text-sm'>Tu carrito está vacío.</p>";
+        document.getElementById("carrito-total").textContent = "";
+        return;
+      }
+
+      carrito.forEach((item, index) => {
+        const precioNumerico = parseFloat(item.precio.replace("$", ""));
+        total += precioNumerico;
+        contenedor.innerHTML += `
+          <div class="border-b pb-2 flex justify-between items-start">
+            <div>
+              <p class="text-sm font-semibold">${item.nombre}</p>
+              <p class="text-xs text-gray-600">Talla: ${item.talla}</p>
+              <p class="text-xs text-gray-700">${item.precio}</p>
+            </div>
+            <button onclick="eliminarDelCarrito(${index})" class="text-red-500 text-sm hover:underline">Eliminar</button>
+          </div>
+        `;
+      });
+      document.getElementById("carrito-total").textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    function eliminarDelCarrito(index) {
+      carrito.splice(index, 1);
+      actualizarCarrito();
+    }
+
+    function toggleMenu(id) {
+      const menus = ["menuHombre", "menuMujer"];
+      menus.forEach(menu => {
+        if (menu === id) {
+          document.getElementById(menu).classList.toggle("hidden");
+        } else {
+          document.getElementById(menu).classList.add("hidden");
+        }
+      });
+    }
+
+    function toggleCarrito() {
+      document.getElementById("carrito-panel").classList.toggle("translate-x-full");
+    }
+
+    document.getElementById("ropa-container").innerHTML = ropa.map(renderProductoCard).join("");
+    document.getElementById("calzado-container").innerHTML = calzado.map(renderProductoCard).join("");
+    actualizarCarrito();
+
+    window.addEventListener("click", function (e) {
+      if (!e.target.closest("button") && !e.target.closest("div.relative")) {
+        document.getElementById("menuHombre").classList.add("hidden");
+        document.getElementById("menuMujer").classList.add("hidden");
+      }
+    });
+  </script>
+</body>
+</html>
