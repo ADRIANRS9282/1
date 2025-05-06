@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tutienda de Ropa</title>
+  <style>
+    :root {
+      --primary-color: #000000;
+      --secondary-color: #ffffff;
+      --accent-color: #d16a6a;
+      --text-color: #ffffff;
+      --gray: #cccccc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--secondary-color);
+      color: var(--primary-color);
+    }
+
+    header {
+      background-color: var(--primary-color);
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .left-menu {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--secondary-color);
+      text-decoration: none;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 600;
+      padding: 8px;
+      display: block;
+    }
+
+    nav ul li:hover > ul {
+      display: block;
+    }
+
+    nav ul ul {
+      display: none;
+      position: absolute;
+      background: var(--primary-color);
+      top: 100%;
+      left: 0;
+      padding: 10px 0;
+      z-index: 1000;
+    }
+
+    nav ul ul li {
+      width: 150px;
+    }
+
+    nav ul ul li a:hover {
+      background-color: var(--accent-color);
+    }
+
+    .hero {
+      background-color: #000;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary-color);
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+    }
+
+    .products {
+      padding: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .product {
+      border: 1px solid #eee;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+    }
+
+    .product img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 15px;
+      text-align: center;
+    }
+
+    .product-info h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .product-info p {
+      color: black;
+      font-weight: bold;
+    }
+
+    .cart-button {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: var(--primary-color);
+      color: var(--gray);
+      margin-top: 40px;
+    }
+
+    .cart {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 8px;
+      max-width: 300px;
+    }
+
+    .cart-items {
+      margin-top: 10px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="left-menu">
+      <a href="#" class="logo">Tutienda de Ropa</a>
+      <nav>
+        <ul>
+          <li><a href="#">HOMBRE</a>
+            <ul>
+              <li><a href="#" onclick="filtrarCategoria('camisa')">Camisas</a></li>
+              <li><a href="#" onclick="filtrarCategoria('pantalon')">Pantalones</a></li>
+            </ul>
+          </li>
+          <li><a href="#">MUJER</a>
+            <ul>
+              <li><a href="#" onclick="filtrarCategoria('vestido')">Vestidos</a></li>
+              <li><a href="#" onclick="filtrarCategoria('bolso')">Bolsos</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Bienvenido a Tutienda de Ropa</h1>
+  </section>
+
+  <section class="products" id="products-container">
+    <div class="product" data-category="camisa">
+      <img src="https://via.placeholder.com/300x400?text=Camisa+Moderna" alt="Camisa Moderna">
+      <div class="product-info">
+        <h2>Camisa Moderna</h2>
+        <p>€29.99</p>
+        <button class="cart-button" data-name="Camisa Moderna" data-price="29.99">Añadir al carrito</button>
+      </div>
+    </div>
+    <div class="product" data-category="vestido">
+      <img src="https://via.placeholder.com/300x400?text=Vestido+Verano" alt="Vestido Verano">
+      <div class="product-info">
+        <h2>Vestido Verano</h2>
+        <p>€49.99</p>
+        <button class="cart-button" data-name="Vestido Verano" data-price="49.99">Añadir al carrito</button>
+      </div>
+    </div>
+    <div class="product" data-category="pantalon">
+      <img src="https://via.placeholder.com/300x400?text=Pantal%C3%B3n+Cl%C3%A1sico" alt="Pantalón Clásico">
+      <div class="product-info">
+        <h2>Pantalón Clásico</h2>
+        <p>€39.99</p>
+        <button class="cart-button" data-name="Pantalón Clásico" data-price="39.99">Añadir al carrito</button>
+      </div>
+    </div>
+    <div class="product" data-category="bolso">
+      <img src="https://via.placeholder.com/300x400?text=Bolso+Elegante" alt="Bolso Elegante">
+      <div class="product-info">
+        <h2>Bolso Elegante</h2>
+        <p>€35.99</p>
+        <button class="cart-button" data-name="Bolso Elegante" data-price="35.99">Añadir al carrito</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="cart">
+    <strong>Carrito: </strong><span id="cart-count">0</span> artículos
+    <div class="cart-items" id="cart-items"></div>
+  </div>
+
+  <footer>
+    &copy; 2025 Tutienda de Ropa. Todos los derechos reservados.
+  </footer>
+
+  <script>
+    let cartCount = 0;
+    const cartItemsContainer = document.getElementById('cart-items');
+
+    document.addEventListener('click', function (e) {
+      if (e.target.classList.contains('cart-button')) {
+        const name = e.target.dataset.name;
+        const price = e.target.dataset.price;
+        const item = document.createElement('div');
+        item.classList.add('cart-item');
+        item.innerHTML = `${name} - €${price} <button onclick="eliminarItem(this)">Eliminar</button>`;
+        cartItemsContainer.appendChild(item);
+        cartCount++;
+        document.getElementById('cart-count').textContent = cartCount;
+      }
+    });
+
+    function eliminarItem(button) {
+      button.parentElement.remove();
+      cartCount--;
+      document.getElementById('cart-count').textContent = cartCount;
+    }
+
+    function filtrarCategoria(categoria) {
+      const productos = document.querySelectorAll('.product');
+      productos.forEach(producto => {
+        producto.style.display = producto.dataset.category === categoria ? 'block' : 'none';
+      });
+    }
+  </script>
+
+</body>
+</html>
+
